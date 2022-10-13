@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from blog import blog
+from api import blog
 
 
 routes = APIRouter()

@@ -1,0 +1,13 @@
+from pydantic import BaseSettings
+
+
+class Setting(BaseSettings):
+    sever_host: str = '127.0.0.1'
+    sever_port: int = 8000
+    database_url: str = "postgresql://postgres:qwerty@localhost/blog"
+
+
+settings = Setting(
+    _env_file='.env',
+    _env_file_encoding='utf-8',
+)

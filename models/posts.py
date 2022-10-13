@@ -1,14 +1,14 @@
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import date
 
 
 class PostBase(BaseModel):
     title: str
     text: str
-    date: datetime
+    date: date
 
 
-class PostList(PostBase):
+class Post(PostBase):
     id: int
 
     class Config:
@@ -16,4 +16,8 @@ class PostList(PostBase):
 
 
 class CreatePost(PostBase):
+    pass
+
+
+class PostUpdate(PostBase):
     pass
