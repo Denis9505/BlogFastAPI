@@ -6,6 +6,9 @@ class Setting(BaseSettings):
     sever_port: int = 8000
     database_url: str = "postgresql://postgres:qwerty@localhost/blog"
 
+    jwt_secret: str
+    jwt_algorithm: str = 'HS256'
+
 
 settings = Setting(
     _env_file='.env',

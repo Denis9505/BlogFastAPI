@@ -8,6 +8,7 @@ from models.posts import CreatePost, PostUpdate
 
 
 class PostsServices:
+    
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
 
