@@ -5,7 +5,8 @@ from models.auth import User, UserCreate, Token
 from services.auth import AuthService, get_current_user
 
 
-router = APIRouter(prefix='/auth')
+router = APIRouter()
+
 
 @router.post('/sign-up', response_model=Token)
 def sign_up(user_data: UserCreate, service: AuthService = Depends()):
