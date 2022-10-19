@@ -15,7 +15,7 @@ app.include_router(auth_roter)
 
 if __name__ == "__main__":
     uvicorn.run(
-    'accountr.app:app',
+    'main:app',
     host=settings.server_host,
     port=settings.server_port,
     reload=True,

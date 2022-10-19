@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, Response, HTTPException, status
 from typing import List
 
 from models.posts import CreatePost, Post, PostUpdate
@@ -33,7 +33,10 @@ def get_post(
     user: User = Depends(get_current_user),
     service: PostsServices = Depends()
     ):
-    return service.get(user_id=user.id, post_id=post_id)
+    post = service.get(user_id=user.id, post_id=post_id)
+    if not post:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    return post
 
 
 @router.put('/{post_id}', response_model=Post)
@@ -43,7 +46,10 @@ def update_post(
     user: User = Depends(get_current_user),
     service: PostsServices = Depends()
 ):
-    return service.update_post(user_id=user.id, post_id=post_id, post_data=post_data)
+    res = service.update_post(user_id=user.id, post_id=post_id, post_data=post_data)
+    if not res:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    return res
 
 
 @router.delete('/{post_id}')
@@ -53,4 +59,7 @@ def delete_post(
     service: PostsServices = Depends()
     ):
     service.delite_post(user_id=user.id, post_id=post_id)
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
+    res = Response(status_code=status.HTTP_204_NO_CONTENT)
+    if not res:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    return res

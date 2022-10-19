@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from tables import Post
@@ -13,15 +13,13 @@ class PostsServices:
         self.session = session
 
     def _get(self, user_id: int, post_id: int) -> Post:
-        post = (
+        return (
             self.session
             .query(Post)
             .filter_by(id=post_id, user_id=user_id)
             .first()
         )
-        if not post:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-        return post
+
 
     def get_post_list(self, user_id: int) -> List[Post]:
         return (
