@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from passlib.hash import bcrypt
 from jose import JWTError, jwt
 
-from fastapi import Depends, HTTPException, status
+from fastapi import  Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from pydantic import ValidationError
@@ -14,7 +14,6 @@ from settings import settings
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/auth/sign-in')
-
 
 def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
     return AuthService.validate_token(token)
@@ -76,7 +75,7 @@ class AuthService:
         
         return Token(access_token=token)
 
-    def __init__(self, session:Session = Depends(get_session)):
+    def __init__(self, session:Session):
         self.session = session
 
     def register_new_user(self, user_data: UserCreate) -> Token:

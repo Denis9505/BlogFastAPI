@@ -5,7 +5,7 @@ class Setting(BaseSettings):
     server_host: str = '127.0.0.1'
     server_port: int = 8000
     
-    database_url: str = "postgresql://postgres:qwerty@localhost/blog"
+    database_url: str = "DATABASE_URL"
 
     jwt_secret: str
     jwt_algorithm: str = 'HS256'

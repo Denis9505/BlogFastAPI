@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Depends, Response, HTTPException, status
 from typing import List
+from sqlalchemy.orm import Session
+from database import get_session
 
 from models.posts import CreatePost, Post, PostUpdate
 from models.auth import User
 from services.posts import PostsServices
-from services.auth import get_current_user
+from api.auth import get_current_user
 
 
 router = APIRouter()
@@ -13,8 +15,9 @@ router = APIRouter()
 @router.get('/', response_model=List[Post])
 def get_posts_list(
     user: User = Depends(get_current_user),
-    service: PostsServices = Depends(),
+    session: Session=Depends(get_session),
     ):
+    service = PostsServices(session=session)
     return service.get_post_list(user_id=user.id)
 
 
@@ -22,8 +25,9 @@ def get_posts_list(
 def create_post(
     item: CreatePost,
     user: User = Depends(get_current_user),
-    service: PostsServices = Depends(),
+    session: Session=Depends(get_session)
     ):
+    service = PostsServices(session=session)
     return service.create_post(user_id=user.id, post_data=item)
 
 
@@ -31,8 +35,9 @@ def create_post(
 def get_post(
     post_id: int,
     user: User = Depends(get_current_user),
-    service: PostsServices = Depends()
+    session: Session=Depends(get_session)
     ):
+    service = PostsServices(session=session)
     post = service.get(user_id=user.id, post_id=post_id)
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
@@ -44,8 +49,9 @@ def update_post(
     post_id: int,
     post_data: PostUpdate,
     user: User = Depends(get_current_user),
-    service: PostsServices = Depends()
+    session: Session=Depends(get_session)
 ):
+    service = PostsServices(session=session)
     res = service.update_post(user_id=user.id, post_id=post_id, post_data=post_data)
     if not res:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
@@ -56,8 +62,9 @@ def update_post(
 def delete_post(
     post_id: int,
     user: User = Depends(get_current_user),
-    service: PostsServices = Depends()
+    session: Session=Depends(get_session)
     ):
+    service = PostsServices(session=session)
     service.delite_post(user_id=user.id, post_id=post_id)
     res = Response(status_code=status.HTTP_204_NO_CONTENT)
     if not res:

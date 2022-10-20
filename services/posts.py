@@ -1,15 +1,13 @@
 from typing import List
-from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from tables import Post
-from database import get_session
 from models.posts import CreatePost, PostUpdate
 
 
 class PostsServices:
     
-    def __init__(self, session: Session = Depends(get_session)):
+    def __init__(self, session: Session):
         self.session = session
 
     def _get(self, user_id: int, post_id: int) -> Post:
