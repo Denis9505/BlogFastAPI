@@ -1,10 +1,10 @@
 #Подключение сессии для БД
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from .settings import settings
+from .settings import setting
 
 
-engine = create_engine(settings.database_url)
+engine = create_engine(setting.database_url)
 
 Session = sessionmaker(
     engine,
