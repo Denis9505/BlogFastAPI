@@ -8,9 +8,9 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from pydantic import ValidationError
 
-from models.auth import Token, User, UserCreate
-from tables import User as t_User
-from settings import setting
+from ..models.auth import Token, User, UserCreate
+from ..tables import User as t_User
+from ..settings import setting
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/auth/sign-in')

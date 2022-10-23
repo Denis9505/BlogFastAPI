@@ -2,8 +2,8 @@
 from typing import List
 from sqlalchemy.orm import Session
 
-from tables import Post
-from models.posts import CreatePost, PostUpdate
+from ..tables import Post
+from ..models.posts import CreatePost, PostUpdate
 
 
 class PostsServices:

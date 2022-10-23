@@ -1,7 +1,7 @@
 """Подлкючение роутов для постов и пользователя"""
 from fastapi import APIRouter
 
-from api import blog, auth
+from .api import blog, auth
 
 
 routes = APIRouter()
