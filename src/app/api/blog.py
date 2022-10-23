@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends, Response, HTTPException, status
 from sqlalchemy.orm import Session
 
-from database import get_session
+from ..database import get_session
 from ..models.posts import CreatePost, Post, PostUpdate
 from ..models.auth import User
 from ..services.posts import PostsServices
