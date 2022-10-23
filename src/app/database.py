@@ -1,4 +1,4 @@
-#Подключение сессии для БД
+"""Подключение сессии для БД"""
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from .settings import setting
@@ -14,9 +14,9 @@ Session = sessionmaker(
 
 
 def get_session() -> Session:
-    #Сессия для БД
+    """Сессия для БД"""
     session = Session()
     try:
         yield session
-    finally: 
+    finally:
         session.close()

@@ -1,12 +1,13 @@
-from fastapi import APIRouter, Depends, Response, HTTPException, status
+"""Api urls and views for posts"""
 from typing import List
+from fastapi import APIRouter, Depends, Response, HTTPException, status
 from sqlalchemy.orm import Session
-from database import get_session
 
-from models.posts import CreatePost, Post, PostUpdate
-from models.auth import User
-from services.posts import PostsServices
-from api.auth import get_current_user
+from ..database import get_session
+from ..models.posts import CreatePost, Post, PostUpdate
+from ..models.auth import User
+from ..services.posts import PostsServices
+from ..api.auth import get_current_user
 
 
 router = APIRouter()
@@ -17,6 +18,7 @@ def get_posts_list(
     user: User = Depends(get_current_user),
     session: Session=Depends(get_session),
     ):
+    """Getting a list of posts"""
     service = PostsServices(session=session)
     return service.get_post_list(user_id=user.id)
 
@@ -27,6 +29,7 @@ def create_post(
     user: User = Depends(get_current_user),
     session: Session=Depends(get_session)
     ):
+    """Create post"""
     service = PostsServices(session=session)
     return service.create_post(user_id=user.id, post_data=item)
 
@@ -37,6 +40,7 @@ def get_post(
     user: User = Depends(get_current_user),
     session: Session=Depends(get_session)
     ):
+    """Getting one post"""
     service = PostsServices(session=session)
     post = service.get(user_id=user.id, post_id=post_id)
     if not post:
@@ -51,6 +55,7 @@ def update_post(
     user: User = Depends(get_current_user),
     session: Session=Depends(get_session)
 ):
+    """Update post"""
     service = PostsServices(session=session)
     res = service.update_post(user_id=user.id, post_id=post_id, post_data=post_data)
     if not res:
@@ -64,6 +69,7 @@ def delete_post(
     user: User = Depends(get_current_user),
     session: Session=Depends(get_session)
     ):
+    """Delete post"""
     service = PostsServices(session=session)
     service.delite_post(user_id=user.id, post_id=post_id)
     res = Response(status_code=status.HTTP_204_NO_CONTENT)
